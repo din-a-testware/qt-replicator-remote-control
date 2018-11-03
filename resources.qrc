@@ -1,0 +1,12 @@
+<RCC>
+    <qresource prefix="/fonts">
+        <file>LCARS_EXTRA_GLYPHS.ttf</file>
+        <file>Helvetica_Ultra_Compressed.ttf</file>
+        <file>DroidSansMono.ttf</file>
+        <file>webdings.ttf</file>
+    </qresource>
+    <qresource prefix="/images">
+        <file>voyager-badge.png</file>
+        <file>replicator_database_orange_red.png</file>
+    </qresource>
+</RCC>
