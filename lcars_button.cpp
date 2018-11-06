@@ -4,7 +4,7 @@
 #include <QDebug>
 #include <QPushButton>
 #include <QStyleOptionButton>
-
+#include <QApplication>
 LCARS_Button::LCARS_Button(QWidget *parent) :
 QPushButton(parent) {
 
@@ -79,6 +79,7 @@ void LCARS_Button::paintEvent(QPaintEvent*) {
 
         break;
     case 1:
+
         maxHeight = parentWidget()->height()/this->property("restricted_Height_Value").toDouble();
         this->setMinimumHeight(maxHeight);
         break;

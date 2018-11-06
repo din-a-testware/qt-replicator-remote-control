@@ -21,7 +21,7 @@ MainWindow::MainWindow(QWidget *parent) :
     LCARS_fonts.addApplicationFont(":/fonts/Helvetica_Ultra_Compressed.ttf");
 
 
-    m_webSocket = new QWebSocket("LCARS Replicator Remote Control");
+    m_webSocket = new QWebSocket("LCARS Replicator Editor");
     m_webSocket->ignoreSslErrors();
     connect(m_webSocket, &QWebSocket::connected, this, &MainWindow::onConnected_recipe);
     connect(m_webSocket, &QWebSocket::disconnected, this, &MainWindow::onDisconnected_recipe);
@@ -38,7 +38,7 @@ MainWindow::MainWindow(QWidget *parent) :
 
 
 
-    m_webSocket_control = new QWebSocket("Replicator Remote Control");
+    m_webSocket_control = new QWebSocket("LCARS Remote Control");
     m_webSocket_control->ignoreSslErrors();
     connect(m_webSocket_control, &QWebSocket::connected, this, &MainWindow::onConnected);
     connect(m_webSocket_control, &QWebSocket::disconnected, this, &MainWindow::onDisconnected);
@@ -61,29 +61,16 @@ MainWindow::MainWindow(QWidget *parent) :
 
 
 
-    /*ui->LCARS_Lines_2->setProperty("Size_TopLeft",QSize(ui->LCARS_Lines_2->height()/2,ui->LCARS_Lines_2->height()/2));
+    ui->LCARS_Lines_2->setProperty("Size_TopLeft",QSize(ui->LCARS_Lines_2->height()/2,ui->LCARS_Lines_2->height()/2));
     ui->LCARS_Lines_2->setProperty("Size_TopRight",QSize(ui->LCARS_Lines_2->height()/2,ui->LCARS_Lines_2->height()/2));
     ui->LCARS_Lines_2->setProperty("Size_BottomLeft",QSize(ui->LCARS_Lines_2->height()/2,ui->LCARS_Lines_2->height()/2));
     ui->LCARS_Lines_2->setProperty("Size_BottomRight",QSize(ui->LCARS_Lines_2->height()/2,ui->LCARS_Lines_2->height()/2));
     ui->LCARS_Lines_2->setContentsMargins(ui->LCARS_Lines_2->height()/2,0,ui->LCARS_Lines_2->height()/2,0);
-    ui->LCARS_Lines_2->update();*/
-
-
-   double maxHeight = this->height()/10.0;
-   /*ui->ip_Edit->setMinimumHeight(maxHeight);
-   ui->ip_Edit->setMaximumHeight(maxHeight);
-    */
-
-        //QFont editFont("Helvetica Ultra Compressed",0,0,false);
-        //editFont.setPixelSize(maxHeight*1.4);
-//    QFont editFont("Helvetica Ultra Compressed",ui->LCARS_Lines_2->height()/2,0,false);
-    //QFont recipeFont("Helvetica Ultra Compressed",ui->Container_Recipe->height()/2,0,false);
-    QFont recipeFont("Helvetica Ultra Compressed",maxHeight/1.2,false);
-    //ui->ip_Edit->setFont(editFont);
-    //ui->ip_Edit->update();
-
-
-
+    ui->LCARS_Lines_2->update();
+    QFont editFont("Helvetica Ultra Compressed",ui->LCARS_Lines_2->height()/2,0,false);
+    QFont recipeFont("Helvetica Ultra Compressed",ui->Container_Recipe->height()/2,0,false);
+    ui->ip_Edit->setFont(editFont);
+    ui->ip_Edit->update();
     ui->recipe_text->setFont(recipeFont);
     ui->recipe_text->update();
     qDebug() << "theme_id" << settings.value("theme_id").toInt();
@@ -120,8 +107,6 @@ MainWindow::MainWindow(QWidget *parent) :
     QScroller::grabGesture(ui->scrollArea, QScroller::LeftMouseButtonGesture);
     QScroller::grabGesture(ui->recipe_list,QScroller::LeftMouseButtonGesture);
     QScroller::grabGesture(ui->ingredients_list,QScroller::LeftMouseButtonGesture);
-    QScroller::grabGesture(ui->recipe_ScrollArea,QScroller::LeftMouseButtonGesture);
-
 
 
     ui->system_Tabs->setCurrentWidget(ui->tab_Start);
@@ -225,16 +210,7 @@ void MainWindow::change_color_theme(int theme){
         std::uniform_int_distribution<int> uni(min,max); // guaranteed unbiased
 
         QList<LCARS_Button *> widget_buttons = this->findChildren<LCARS_Button *>();;
-        QList<LCARS_Line *> widget_line = this->findChildren<LCARS_Line *>();
 
-        foreach (LCARS_Line *line, widget_line) {
-            auto random_integer = uni(rng);
-            int center_rand = random_integer;
-            line->setProperty("Edge_Left_Color",color_theme.at(center_rand));
-            line->setProperty("Edge_Right_Color",color_theme.at(center_rand));
-            line->repaint();
-
-        }
 
         foreach (LCARS_Button *butt, widget_buttons) {
             auto random_integer = uni(rng);
@@ -382,7 +358,7 @@ void MainWindow::loadRecipe(QVector<QStringList> result) {
     //ui->recipe_id->setValue(-1);
 
     //ui->recipe_title->setText(resultList[1]);
-    ui->recipe_text->setText(resultList[3]);
+    ui->recipe_text->insertPlainText(resultList[3]);
     for (int i=0;i<ingredientsItems.count();i++) {
         ui->ingredients_list->addItem(ingredientsItems.at(i));
     }

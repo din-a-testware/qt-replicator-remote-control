@@ -29,13 +29,15 @@ SOURCES += \
         mainwindow.cpp \
         lcars_button.cpp \
     lcars_line.cpp \
-    lcars_roundededgeconnector.cpp
+    lcars_roundededgeconnector.cpp \
+    process_data.cpp
 
 HEADERS += \
         mainwindow.h \
     lcars_button.h \
     lcars_line.h \
-    lcars_roundededgeconnector.h
+    lcars_roundededgeconnector.h \
+    process_data.h
 
 FORMS += \
         mainwindow.ui

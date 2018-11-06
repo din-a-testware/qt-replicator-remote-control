@@ -4,6 +4,7 @@
 #include <QMainWindow>
 #include <QSettings>
 
+
 namespace Ui {
 class MainWindow;
 }
@@ -15,17 +16,27 @@ class MainWindow : public QMainWindow
 public:
     explicit MainWindow(QWidget *parent = nullptr);
     ~MainWindow();
+    QWebSocket *m_webSocket_control;
+
     QWebSocket *m_webSocket;
-
-
+    QVector<QStringList> replicationData;
 
     QSettings settings;
 
 private slots:
     void on_pushButton_clicked();
+
     void onConnected();
 
     void onDisconnected();
+
+    void onConnected_recipe();
+
+    void onDisconnected_recipe();
+
+    void populateRecipeList(QVector<QStringList> result);
+
+    void loadRecipe(QVector<QStringList> result);
 
     void change_color_theme(int theme);
 
@@ -65,9 +76,23 @@ private slots:
 
     void on_button_Settings_clicked();
 
-    void on_ip_Edit_textChanged();
-
     void on_pushButton_11_clicked();
+
+    void on_button_ShowRecipe_clicked();
+
+    void on_button_ShowIngredients_clicked();
+
+    void on_button_SearchRecipe_clicked();
+
+    void on_pushButton_15_clicked();
+
+    void on_pushButton_13_clicked();
+
+    void on_pushButton_14_clicked();
+
+    void on_pushButton_12_clicked();
+
+    void on_LCARS_PushButton_3_clicked();
 
 private:
     Ui::MainWindow *ui;
